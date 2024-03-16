@@ -59,18 +59,18 @@ db = DataBase()
 @bot.message_handler(commands=["start"])
 def start(message):
 	# bot.send_message(message.from_user.id, "Начало работы")
-	print("Начало работы")
+	# print("Начало работы")
 
 	user = db.get_user(message.chat.id)
 	# print("Создание нового пользователя")
 
 	if user["is_passed"]:
-		print("Если уэе прошел")
+		# print("Если уэе прошел")
 		bot.send_message(message.from_user.id, "Это бесплатный проект, вы можете поддержать нас символической суммой на счет EE111010010209561016 GORNAKOV DMITRI 👍😇")
 		return
 
 	if user["is_passing"]:
-		print("Начало прохождения курса")
+		# print("Начало прохождения курса")
 		return
 
 
