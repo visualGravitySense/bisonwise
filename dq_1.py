@@ -14,7 +14,7 @@ class DataBase:
 
 		self.db = cluster["QuizBot"]
 		self.users = self.db["Users"]
-		self.questions = self.db["Questions"]
+		self.questions = self.db["QuestionsUX"]
 
 		# Еше одна база упраэнений для платных подписчиков
 		# self.course = self.db["Course"]
