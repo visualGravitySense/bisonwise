@@ -3,7 +3,7 @@ from pymongo import MongoClient
 # from config import BOT_TOKEN, MONGO
 
 # bot = BOT_TOKEN
-bot = telebot.TeleBot("6704490108:AAGscrT9P2AadTN20eH7vRNcjPqL8WNVNtE")
+bot = telebot.TeleBot("6779810273:AAEPuH8DTjt6JjKGOZVvnWcPB8vPqFG1OKc")
 
 
 
