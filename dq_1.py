@@ -3,25 +3,25 @@ from pymongo import MongoClient
 # from config import BOT_TOKEN, MONGO
 
 # bot = BOT_TOKEN
-bot = telebot.TeleBot("6779810273:AAEPuH8DTjt6JjKGOZVvnWcPB8vPqFG1OKc")
+bot = telebot.TeleBot("BOT_TOKEN")
 
 
 
 class DataBase:
 	def __init__(self):
 		# cluster = MONGO
-		cluster = MongoClient("mongodb+srv://helikeel:2aCEOKLIMczzb17U@digo-1.bgjk2no.mongodb.net/?retryWrites=true&w=majority")
+		cluster = MongoClient("MONGO_URL")
 
 		self.db = cluster["QuizBot"]
 		self.users = self.db["Users"]
 		self.questions = self.db["QuestionsUX"]
 
-		# Еше одна база упраэнений для платных подписчиков
+		
 		# self.course = self.db["Course"]
 
 		self.questions_count = len(list(self.questions.find({})))
 
-		# Получение номера урока в платном курсе
+		
 		# self.course_cont = len(list(self.course.find({})))
 
 	def get_user(self, chat_id):
@@ -30,7 +30,7 @@ class DataBase:
 		if user is not None:
 			return user
 
-		# Добавлние новых параметров пользователь: Оплачено и Номер/Ответ Платного урока
+		
 		user = {
 			"chat_id": chat_id,
 			"is_passing": False,
@@ -75,11 +75,11 @@ def start(message):
 
 
 	db.set_user(message.chat.id, {"question_index": 0, "is_passing": True})
-	# print("установили пользователя")
+	
 	user = db.get_user(message.chat.id)
-	# print("Получили пользователя")
+	
 	post = get_question_message(user)
-	# print("Получили вопрос")
+	
 	if post is not None:
 		bot.send_message(message.from_user.id, post["text"], reply_markup=post["keyboard"])
 
@@ -124,7 +124,7 @@ def next(query):
 # 	# bot.send_message(message.from_user.id, f"Для оплаты перейдите по ссылке: {payments_bot}")
 # 	bot.send_message(query.from_user.id, f"Для оплаты перейдите по ссылке: {payments_bot}")
 # 	# bot.send_message(message.from_user.id, f"Для оплаты перейдите по ссылке: {payments_bot}")
-# 	# bot.send_message(query.from_user.id, "Вы прошли бесплатную пробную версию курса по джаз-вокалу. Для получения доступа к полной версии необходимо оформить единоразовую подписку 👍😇 для этого переведите 30 евро на счет Eugenia Evy Anstal-Põld EE282200001109459014 и укажите в пояснении свой номер телефона")
+
 
 def get_question_message(user):
 	if user["question_index"] == db.questions_count:
@@ -145,7 +145,7 @@ def get_question_message(user):
 			smile = "😎"
 
 
-		text = f"Поздравляем! Вы успешно завершили все уроки по созданию прототипа для чеклиста качества. Ваши навыки в дизайне интерфейса значительно улучшились, и мы уверены, что вы готовы применить их на практике. Однако это еще не конец нашего пути вместе! Уже скоро мы подготовим для вас новые уроки и проекты, чтобы помочь вам продолжить свое развитие в области дизайна. Следите за обновлениями и готовьтесь к новым вызовам и достижениям! 👍😇"
+		text = f"Congratulations! You have successfully completed all the lessons on creating a prototype for a quality checklist. Your UI design skills have improved significantly, and we are sure that you are ready to put them into practice. However, this is not the end of our journey together! Soon we will prepare new lessons and projects for you to help you continue your development in the field of design. Stay tuned and get ready for new challenges and achievements! 👍😇"
 		# Встраивание новой кнопки "К оплате" >> функция запуска нового бота
 		# keyboard2 = telebot.types.InlineKeyboardMarkup()
 		# keyboard2.row(telebot.types.InlineKeyboardButton("Оплатить Курс 'Джаз-Вокал'", callback_data="?pay"))
@@ -178,7 +178,7 @@ def get_question_message(user):
 def get_answered_message(user):
 	question = db.get_question(user["question_index"])
 
-	text = f"Вопрос №{user['question_index'] + 1}\n\n{question['text']}\n"
+	text = f"Question №{user['question_index'] + 1}\n\n{question['text']}\n"
 
 	for answer_index, answer in enumerate(question["answers"]):
 		text += f"{chr(answer_index + 97)}) {answer}"
